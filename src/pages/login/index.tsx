@@ -2,22 +2,25 @@ import {
   Box,
   Button,
   Container,
-  Grid2,
   Paper,
   TextField,
   Typography,
+  Grid2,
 } from "@mui/material";
+
 import React, { useState } from "react";
 
-const LoginPage: React.FC<{}> = () => {
+const LoginPage = () => {
   type LoginType = {
     username: string;
     password: string;
   };
-  const [loginData, setLoginData] = React.useState<LoginType>({
+
+  const [loginData, setLoginData] = useState<LoginType>({
     username: "",
     password: "",
   });
+
   const dataLogin = (e: React.ChangeEvent<HTMLInputElement>) => {
     setLoginData({ ...loginData, [e.target.name]: e.target.value });
   };
@@ -26,6 +29,7 @@ const LoginPage: React.FC<{}> = () => {
     e.preventDefault();
     console.log(loginData);
   };
+
   return (
     <Container maxWidth="sm">
       <Grid2
@@ -65,7 +69,7 @@ const LoginPage: React.FC<{}> = () => {
                 variant="contained"
                 sx={{ mt: 2, mb: 3 }}
               >
-                Iniciar sesion
+                Iniciar sesión
               </Button>
             </Box>
           </Paper>

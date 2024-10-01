@@ -2,7 +2,7 @@ import React from "react";
 import NavBar from "./NavBar";
 import { Outlet } from "react-router-dom";
 
-const RouterLayout: React.FC<{}> = () => {
+const RouterLayout = () => {
   return (
     <div>
       <NavBar />

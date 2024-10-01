@@ -4,7 +4,7 @@ import HomePage from "./pages/home";
 import LoginPage from "./pages/login";
 import RouterLayout from "./common/RouterLayout";
 
-export const AppRouter: React.FC<{}> = () => {
+const AppRouter = () => {
   return (
     <Routes>
       <Route path="/" element={<RouterLayout />}>
@@ -14,3 +14,5 @@ export const AppRouter: React.FC<{}> = () => {
     </Routes>
   );
 };
+
+export default AppRouter;
