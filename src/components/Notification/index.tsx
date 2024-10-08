@@ -1,4 +1,5 @@
-import { Alert, AlertColor, Snackbar } from "@mui/material";
+import { Alert, AlertColor, Snackbar, Typography } from "@mui/material";
+import { getAutoHeightDuration } from "@mui/material/styles/createTransitions";
 import React from "react";
 
 type NotificationProps = {
@@ -8,19 +9,22 @@ type NotificationProps = {
   handleClose: () => void;
 };
 
-const Notification = ({
+export const Notification = ({
   open,
   msg,
   severity,
   handleClose,
 }: NotificationProps) => {
   return (
-    <Snackbar open={open} onClose={handleClose}>
+    <Snackbar
+      open={open}
+      onClose={handleClose}
+      anchorOrigin={{ vertical: "top", horizontal: "center" }}
+      autoHideDuration={4000}
+    >
       <Alert severity={severity} onClose={handleClose}>
-        {msg}
+        <Typography>{msg} </Typography>
       </Alert>
     </Snackbar>
   );
 };
-
-export default Notification;
