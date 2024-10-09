@@ -6,8 +6,8 @@ import {
   Stack,
   Toolbar,
   Typography,
+  Grid2,
 } from "@mui/material";
-import Grid from "@mui/material/Grid2";
 import { useNavigate } from "react-router-dom";
 
 const NavBar = () => {
@@ -17,24 +17,24 @@ const NavBar = () => {
       <AppBar position="sticky">
         <Toolbar>
           <Container maxWidth="xl">
-            <Grid
+            <Grid2
               container
               direction="row"
               justifyContent="space-between"
               alignItems="center"
             >
-              <Grid>
+              <Grid2>
                 <Typography>Cadena Crea</Typography>
-              </Grid>
-              <Grid>
+              </Grid2>
+              <Grid2>
                 <Stack spacing={2} direction="row">
                   <Button variant="contained" onClick={() => navigate("login")}>
                     login
                   </Button>
                   <Button variant="outlined">login</Button>
                 </Stack>
-              </Grid>
-            </Grid>
+              </Grid2>
+            </Grid2>
           </Container>
         </Toolbar>
       </AppBar>
