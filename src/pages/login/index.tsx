@@ -9,8 +9,12 @@ import {
 } from "@mui/material";
 
 import React, { useState } from "react";
+import { useNotification } from "../../context/notification.context";
+import { LoginValidate } from "../../utils/validateForm";
 
 const LoginPage = () => {
+  const { getError, getSuccess } = useNotification();
+
   type LoginType = {
     username: string;
     password: string;
@@ -27,7 +31,13 @@ const LoginPage = () => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(loginData);
+    LoginValidate.validate(loginData)
+      .then(() => {
+        getSuccess(JSON.stringify(loginData));
+      })
+      .catch((error) => {
+        getError(error.message);
+      });
   };
 
   return (
@@ -52,7 +62,6 @@ const LoginPage = () => {
                 label="Email"
                 onChange={dataLogin}
                 sx={{ mt: 2, mb: 1.5 }}
-                required
               />
               <TextField
                 name="password"
@@ -61,7 +70,6 @@ const LoginPage = () => {
                 label="Password"
                 onChange={dataLogin}
                 sx={{ mt: 1.5, mb: 1.5 }}
-                required
               />
               <Button
                 fullWidth

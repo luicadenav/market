@@ -8,11 +8,13 @@ import {
   Typography,
 } from "@mui/material";
 import Grid from "@mui/material/Grid2";
+import { useNavigate } from "react-router-dom";
 
 const NavBar = () => {
+  const navigate = useNavigate();
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="fixed">
+      <AppBar position="sticky">
         <Toolbar>
           <Container maxWidth="xl">
             <Grid
@@ -26,7 +28,9 @@ const NavBar = () => {
               </Grid>
               <Grid>
                 <Stack spacing={2} direction="row">
-                  <Button variant="contained">login</Button>
+                  <Button variant="contained" onClick={() => navigate("login")}>
+                    login
+                  </Button>
                   <Button variant="outlined">login</Button>
                 </Stack>
               </Grid>
