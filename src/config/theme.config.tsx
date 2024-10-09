@@ -50,6 +50,10 @@ const theme = createTheme({
           border: `1px solid ${themePalette.ERROR_MAIN}`,
           background: themePalette.BG_ERROR_MAIN,
         },
+        standardSuccess: {
+          border: `1px solid ${themePalette.SUCCESS_MAIN}`,
+          background: themePalette.BG_SUCCESS_MAIN,
+        },
       },
     },
   },
