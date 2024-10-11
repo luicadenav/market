@@ -12,7 +12,7 @@ import { useNotification } from "../../context/notification.context";
 import { CardComponent, HeaderComponent } from "../../components";
 import React from "react";
 import { characters } from "../../api/characters";
-import { TypeCharacter } from "./character.interface";
+import { TypeCharacter } from "./interface/character.interface";
 
 const HomePage = () => {
   const [page, setPage] = React.useState(1);
