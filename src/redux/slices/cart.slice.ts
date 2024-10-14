@@ -9,6 +9,10 @@ interface cartState {
  info:string;
 }
 
+interface CartRemoveState {
+  id: string | number;
+}
+
 // Define the initial state using that type
 const initialState: cartState[] = [];
 
@@ -22,9 +26,14 @@ export const cartSlice = createSlice({
         state.push(action.payload)
       }
     },
-    removeToCard: () => { }
+    removeToCart: (state, action:PayloadAction<CartRemoveState>) => {
+       const { id } = action.payload;
+      if(state.some((item)=> item.id === id)){
+        return state = state.filter((item)=> item.id !== id)
+      }
+     }
   },
 })
 
-export const { addToCard ,removeToCard} = cartSlice.actions
+export const { addToCard , removeToCart} = cartSlice.actions
 

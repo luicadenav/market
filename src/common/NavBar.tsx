@@ -7,11 +7,24 @@ import {
   Toolbar,
   Typography,
   Grid2,
+  IconButton,
+  Badge,
 } from "@mui/material";
+import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import { useNavigate } from "react-router-dom";
+import { useAppSelector } from "../redux/hooks";
+import { CartComponent } from "./Cart";
+import React from "react";
 
 const NavBar = () => {
   const navigate = useNavigate();
+  const items = useAppSelector((state) => state.cartReducer);
+  const [open, setOpen] = React.useState<boolean>(false);
+
+  const handleStateViewDrawer = () => {
+    setOpen((state) => !state);
+  };
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="sticky">
@@ -28,6 +41,14 @@ const NavBar = () => {
               </Grid2>
               <Grid2>
                 <Stack spacing={2} direction="row">
+                  <IconButton
+                    color="primary"
+                    onClick={() => handleStateViewDrawer()}
+                  >
+                    <Badge color="error" badgeContent={items.length}>
+                      <ShoppingCartOutlinedIcon />
+                    </Badge>
+                  </IconButton>
                   <Button variant="contained" onClick={() => navigate("login")}>
                     login
                   </Button>
@@ -38,6 +59,10 @@ const NavBar = () => {
           </Container>
         </Toolbar>
       </AppBar>
+      <CartComponent
+        open={open}
+        handleStateViewDrawer={handleStateViewDrawer}
+      />
     </Box>
   );
 };
