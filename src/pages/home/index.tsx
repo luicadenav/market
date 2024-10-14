@@ -8,7 +8,7 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import { useNotification } from "../../context/notification.context";
+
 import { CardComponent, HeaderComponent } from "../../components";
 import React from "react";
 import { characters } from "../../api/characters";
@@ -19,6 +19,7 @@ const HomePage = () => {
   const [allCharacters, setAllCharacters] = React.useState<
     TypeCharacter[] | null
   >(null);
+
   const [loading, setLoading] = React.useState(true);
   const [countPages, setCountPages] = React.useState(1);
 
@@ -62,13 +63,13 @@ const HomePage = () => {
               <Grid2 sx={{ my: 2 }} container spacing={2} direction="row">
                 {allCharacters?.map((character) => {
                   return (
-                    <Grid2 size={{ xs: 3 }}>
+                    <Grid2 key={character.id} size={{ xs: 3 }}>
                       <CardComponent
-                        key={character.id}
                         name={character.name}
                         image={character.image}
                         species={character.species}
                         status={character.status}
+                        id={character.id}
                       />
                     </Grid2>
                   );
