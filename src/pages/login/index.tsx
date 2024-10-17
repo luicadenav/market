@@ -11,34 +11,25 @@ import {
 import React, { useState } from "react";
 import { useNotification } from "../../context/notification.context";
 import { LoginValidate } from "../../utils/validateForm";
+import { useFormik } from "formik";
+
+type LoginType = {
+  username: string;
+  password: string;
+};
 
 const LoginPage = () => {
-  const { getError, getSuccess } = useNotification();
-
-  type LoginType = {
-    username: string;
-    password: string;
-  };
-
-  const [loginData, setLoginData] = useState<LoginType>({
-    username: "",
-    password: "",
+  const { getSuccess } = useNotification();
+  const formik = useFormik<LoginType>({
+    initialValues: {
+      username: "",
+      password: "",
+    },
+    validationSchema: LoginValidate,
+    onSubmit: (values: LoginType) => {
+      getSuccess(JSON.stringify(values));
+    },
   });
-
-  const dataLogin = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setLoginData({ ...loginData, [e.target.name]: e.target.value });
-  };
-
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    LoginValidate.validate(loginData)
-      .then(() => {
-        getSuccess(JSON.stringify(loginData));
-      })
-      .catch((error) => {
-        getError(error.message);
-      });
-  };
 
   return (
     <Container maxWidth="sm">
@@ -54,22 +45,32 @@ const LoginPage = () => {
             <Typography sx={{ mt: 1, mb: 1 }} variant="h4">
               Iniciar sesión
             </Typography>
-            <Box component="form" onSubmit={handleSubmit}>
+            <Box component="form" onSubmit={formik.handleSubmit}>
               <TextField
                 name="username"
                 fullWidth
+                sx={{ mt: 2, mb: 1.5 }}
                 type="text"
                 label="Email"
-                onChange={dataLogin}
-                sx={{ mt: 2, mb: 1.5 }}
+                value={formik.values.username}
+                onChange={formik.handleChange}
+                error={
+                  formik.touched.username && Boolean(formik.errors.username)
+                }
+                helperText={formik.touched.username && formik.errors.username}
               />
               <TextField
                 name="password"
                 fullWidth
                 type="password"
                 label="Password"
-                onChange={dataLogin}
+                onChange={formik.handleChange}
                 sx={{ mt: 1.5, mb: 1.5 }}
+                value={formik.values.password}
+                error={
+                  formik.touched.password && Boolean(formik.errors.password)
+                }
+                helperText={formik.touched.password && formik.errors.password}
               />
               <Button
                 fullWidth
