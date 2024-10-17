@@ -14,7 +14,7 @@ import React from "react";
 import { characters } from "../../api/characters";
 import { TypeCharacter } from "./interface/character.interface";
 
-const HomePage = () => {
+export const HomePage = () => {
   const [page, setPage] = React.useState(1);
   const [allCharacters, setAllCharacters] = React.useState<
     TypeCharacter[] | null
@@ -92,5 +92,3 @@ const HomePage = () => {
     </Container>
   );
 };
-
-export default HomePage;
