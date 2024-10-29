@@ -44,11 +44,11 @@ export const HomePage = () => {
   return (
     <Container maxWidth="xl">
       <HeaderComponent
-        title="Hola mundo"
-        description="bienvenido a cadena crea"
+        title="Morty's Store"
+        description="Made by Cadena crea"
         element={
           <Button fullWidth variant="contained">
-            llamado a la acción
+            Call to action
           </Button>
         }
       />

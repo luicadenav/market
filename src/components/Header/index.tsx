@@ -23,7 +23,7 @@ export const HeaderComponent = ({
           sx={{ height: "100%" }}
         >
           <Grid2
-            size={{ xs: 5 }}
+            size={{ xs: 5, md: 8 }}
             container
             direction="column"
             justifyContent="center"
@@ -31,7 +31,7 @@ export const HeaderComponent = ({
             sx={{ height: "100%" }}
           >
             <Grid2>
-              <Typography variant="h1" sx={{ mt: 2 }}>
+              <Typography variant="h1" sx={{ my: 2 }}>
                 {title}
               </Typography>
             </Grid2>

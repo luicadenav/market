@@ -15,9 +15,12 @@ import { useNavigate } from "react-router-dom";
 import { useAppSelector } from "../redux/hooks";
 import { CartComponent } from "./Cart";
 import React from "react";
+import { useDispatch } from "react-redux";
+import { changeAuth } from "../redux/slices/auth.slice";
 
 const NavBar = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const items = useAppSelector((state) => state.cartReducer);
   const [open, setOpen] = React.useState<boolean>(false);
 
@@ -52,7 +55,12 @@ const NavBar = () => {
                   <Button variant="contained" onClick={() => navigate("login")}>
                     login
                   </Button>
-                  <Button variant="outlined">login</Button>
+                  <Button
+                    variant="outlined"
+                    onClick={() => dispatch(changeAuth())}
+                  >
+                    Logout
+                  </Button>
                 </Stack>
               </Grid2>
             </Grid2>

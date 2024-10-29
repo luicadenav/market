@@ -7,11 +7,16 @@ import {
   Typography,
   Grid2,
 } from "@mui/material";
+import { useNavigate } from "react-router-dom";
+import { changeAuth } from "../../redux/slices/auth.slice";
+import { useDispatch } from "react-redux";
+import { Navigate } from "react-router-dom";
 
 import React, { useState } from "react";
 import { useNotification } from "../../context/notification.context";
 import { LoginValidate } from "../../utils/validateForm";
 import { useFormik } from "formik";
+import { useAppSelector } from "../../redux/hooks";
 
 type LoginType = {
   username: string;
@@ -20,6 +25,11 @@ type LoginType = {
 
 const LoginPage = () => {
   const { getSuccess } = useNotification();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const { isAuth } = useAppSelector((state) => state.authReducer);
+
   const formik = useFormik<LoginType>({
     initialValues: {
       username: "",
@@ -28,8 +38,14 @@ const LoginPage = () => {
     validationSchema: LoginValidate,
     onSubmit: (values: LoginType) => {
       getSuccess(JSON.stringify(values));
+      dispatch(changeAuth());
+      navigate("/");
     },
   });
+
+  if (isAuth) {
+    return <Navigate to="/" />; // Redirige a la página de inicio u otra ruta
+  }
 
   return (
     <Container maxWidth="sm">
@@ -78,9 +94,12 @@ const LoginPage = () => {
                 variant="contained"
                 sx={{ mt: 2, mb: 3 }}
               >
-                Iniciar sesión
+                Login
               </Button>
             </Box>
+            <Typography sx={{ mt: 1, mb: 1 }} variant="body2">
+              Make up a username and password.
+            </Typography>
           </Paper>
         </Grid2>
       </Grid2>

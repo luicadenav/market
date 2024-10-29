@@ -46,7 +46,7 @@ export const CartComponent: React.FC<CartComponentProps> = ({
                 info={info}
               />
             ))
-          : "Nada por aqui"}
+          : "Nothing to see here."}
       </Box>
     </Drawer>
   );
