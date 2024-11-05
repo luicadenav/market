@@ -8,15 +8,16 @@ import {
   Grid2,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { changeAuth } from "../../redux/slices/auth.slice";
+import { login, logout } from "../../redux/slices/auth.slice";
 import { useDispatch } from "react-redux";
 import { Navigate } from "react-router-dom";
 
-import React, { useState } from "react";
 import { useNotification } from "../../context/notification.context";
 import { LoginValidate } from "../../utils/validateForm";
 import { useFormik } from "formik";
 import { useAppSelector } from "../../redux/hooks";
+import { authThunk } from "../../redux/thunks/auth.thunk";
+import { AppDispatch } from "../../redux/store";
 
 type LoginType = {
   username: string;
@@ -25,7 +26,7 @@ type LoginType = {
 
 const LoginPage = () => {
   const { getSuccess } = useNotification();
-  const dispatch = useDispatch();
+  const dispatch: AppDispatch = useDispatch();
   const navigate = useNavigate();
 
   const { isAuth } = useAppSelector((state) => state.authReducer);
@@ -36,15 +37,14 @@ const LoginPage = () => {
       password: "",
     },
     validationSchema: LoginValidate,
-    onSubmit: (values: LoginType) => {
-      getSuccess(JSON.stringify(values));
-      dispatch(changeAuth());
+    onSubmit: (values) => {
+      dispatch(authThunk(values));
       navigate("/");
     },
   });
 
   if (isAuth) {
-    return <Navigate to="/" />; // Redirige a la página de inicio u otra ruta
+    return <Navigate to="/" replace />;
   }
 
   return (
