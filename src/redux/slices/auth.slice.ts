@@ -1,6 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { authThunk } from "../thunks/auth.thunk";
 import { SerializedError } from "@reduxjs/toolkit";
+import Cookies from "js-cookie";
+import { expirationTokenAuth, tokenDecode } from "../../utils/decodeToken";
+import { TokenFirebase } from "../../interfaces/firebase.interfaces";
 
 interface AuthState {
   isAuth: boolean;
@@ -15,14 +18,22 @@ interface AuthState {
   isExpired: boolean | null;
 }
 
+const accessToken = Cookies.get("accessToken");
+
 const initialState: AuthState = {
-  isAuth: false,
-  success: false,
+  isAuth: accessToken !== undefined && !expirationTokenAuth(accessToken),
+  success: accessToken !== undefined,
   error: null,
-  userData: null,
+  userData: accessToken
+    ? {
+        email: tokenDecode<TokenFirebase>(accessToken).email,
+        uid: tokenDecode<TokenFirebase>(accessToken).sub,
+      }
+    : null,
   loading: false,
-  accessToken: null,
-  isExpired: false,
+  accessToken: accessToken || null,
+  isExpired:
+    accessToken !== undefined ? expirationTokenAuth(accessToken) : null,
 };
 
 export const authSlice = createSlice({

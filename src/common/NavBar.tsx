@@ -17,6 +17,7 @@ import { CartComponent } from "./Cart";
 import React from "react";
 import { useDispatch } from "react-redux";
 import { logout } from "../redux/slices/auth.slice";
+import Cookies from "js-cookie";
 
 const NavBar = () => {
   const { isAuth } = useAppSelector((state) => state.authReducer);
@@ -27,6 +28,12 @@ const NavBar = () => {
 
   const handleStateViewDrawer = () => {
     setOpen((state) => !state);
+  };
+
+  const handleLogout = () => {
+    dispatch(logout());
+    Cookies.remove("accessToken");
+    navigate("/login");
   };
 
   return (
@@ -45,10 +52,7 @@ const NavBar = () => {
               </Grid2>
               <Grid2>
                 {isAuth ? (
-                  <Button
-                    variant="contained"
-                    onClick={() => dispatch(logout())}
-                  >
+                  <Button variant="contained" onClick={handleLogout}>
                     logout
                   </Button>
                 ) : (

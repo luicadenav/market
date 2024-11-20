@@ -1,6 +1,4 @@
 import { Alert, AlertColor, Snackbar, Typography } from "@mui/material";
-import { getAutoHeightDuration } from "@mui/material/styles/createTransitions";
-import React from "react";
 
 type NotificationProps = {
   open: boolean;

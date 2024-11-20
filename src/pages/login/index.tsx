@@ -8,7 +8,6 @@ import {
   Grid2,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { login, logout } from "../../redux/slices/auth.slice";
 import { useDispatch } from "react-redux";
 import { Navigate } from "react-router-dom";
 

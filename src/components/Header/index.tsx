@@ -38,7 +38,7 @@ export const HeaderComponent = ({
             <Grid2>
               <Typography>{description}</Typography>
             </Grid2>
-            {element != undefined && (
+            {element !== undefined && (
               <Grid2 width="100%" sx={{ mt: 4 }}>
                 {element}
               </Grid2>
