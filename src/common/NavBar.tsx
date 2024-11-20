@@ -16,9 +16,11 @@ import { useAppSelector } from "../redux/hooks";
 import { CartComponent } from "./Cart";
 import React from "react";
 import { useDispatch } from "react-redux";
-import { changeAuth } from "../redux/slices/auth.slice";
+import { logout } from "../redux/slices/auth.slice";
+import Cookies from "js-cookie";
 
 const NavBar = () => {
+  const { isAuth } = useAppSelector((state) => state.authReducer);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const items = useAppSelector((state) => state.cartReducer);
@@ -26,6 +28,12 @@ const NavBar = () => {
 
   const handleStateViewDrawer = () => {
     setOpen((state) => !state);
+  };
+
+  const handleLogout = () => {
+    dispatch(logout());
+    Cookies.remove("accessToken");
+    navigate("/login");
   };
 
   return (
@@ -43,25 +51,31 @@ const NavBar = () => {
                 <Typography>Cadena Crea</Typography>
               </Grid2>
               <Grid2>
-                <Stack spacing={2} direction="row">
-                  <IconButton
-                    color="primary"
-                    onClick={() => handleStateViewDrawer()}
-                  >
-                    <Badge color="error" badgeContent={items.length}>
-                      <ShoppingCartOutlinedIcon />
-                    </Badge>
-                  </IconButton>
-                  <Button variant="contained" onClick={() => navigate("login")}>
-                    login
+                {isAuth ? (
+                  <Button variant="contained" onClick={handleLogout}>
+                    logout
                   </Button>
-                  <Button
-                    variant="outlined"
-                    onClick={() => dispatch(changeAuth())}
-                  >
-                    Logout
-                  </Button>
-                </Stack>
+                ) : (
+                  <Stack spacing={2} direction="row">
+                    <IconButton
+                      color="primary"
+                      onClick={() => handleStateViewDrawer()}
+                    >
+                      <Badge color="error" badgeContent={items.length}>
+                        <ShoppingCartOutlinedIcon />
+                      </Badge>
+                    </IconButton>
+                    <Button
+                      variant="contained"
+                      onClick={() => navigate("login")}
+                    >
+                      login
+                    </Button>
+                    <Button variant="outlined" onClick={() => {}}>
+                      register
+                    </Button>
+                  </Stack>
+                )}
               </Grid2>
             </Grid2>
           </Container>

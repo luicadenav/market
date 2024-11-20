@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import { characters } from "../../api/characters";
-import React, { useState } from "react";
+import React from "react";
 import { ICharacter } from "./interface/character.interface";
 import {
   Box,
@@ -55,6 +55,7 @@ const CharacterPage = () => {
             <Grid2 size={{ xs: 6 }}>
               <img
                 src={character?.image}
+                alt={character?.name}
                 style={{ width: "100%", borderRadius: "0.5em" }}
               />
             </Grid2>
