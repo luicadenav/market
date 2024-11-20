@@ -1,6 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { authThunk } from "../thunks/auth.thunk";
-import { SerializedError } from "@reduxjs/toolkit";
 import Cookies from "js-cookie";
 import { expirationTokenAuth, tokenDecode } from "../../utils/decodeToken";
 import { TokenFirebase } from "../../interfaces/firebase.interfaces";
@@ -8,7 +7,7 @@ import { TokenFirebase } from "../../interfaces/firebase.interfaces";
 interface AuthState {
   isAuth: boolean;
   success: boolean;
-  error: SerializedError | null;
+  error: string | null;
   userData: {
     email: string | null;
     uid: string | null;
@@ -16,6 +15,11 @@ interface AuthState {
   loading: boolean;
   accessToken: string | null;
   isExpired: boolean | null;
+}
+
+interface FirebaseAuthError {
+  code: string;
+  message: string;
 }
 
 const accessToken = Cookies.get("accessToken");
@@ -69,8 +73,9 @@ export const authSlice = createSlice({
     });
 
     builder.addCase(authThunk.rejected, (state, action) => {
+      const error = action.payload as FirebaseAuthError;
       state.loading = false;
-      state.error = action.error as SerializedError;
+      state.error = error.code;
       state.isAuth = false;
       state.success = false;
       state.userData = null;

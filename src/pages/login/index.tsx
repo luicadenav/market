@@ -7,16 +7,15 @@ import {
   Typography,
   Grid2,
 } from "@mui/material";
-import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { Navigate } from "react-router-dom";
-
 import { useNotification } from "../../context/notification.context";
 import { LoginValidate } from "../../utils/validateForm";
-import { useFormik } from "formik";
+import { FormikHelpers, useFormik } from "formik";
 import { useAppSelector } from "../../redux/hooks";
 import { authThunk } from "../../redux/thunks/auth.thunk";
 import { AppDispatch } from "../../redux/store";
+import React from "react";
 
 type LoginType = {
   username: string;
@@ -24,21 +23,50 @@ type LoginType = {
 };
 
 const LoginPage = () => {
-  const { getSuccess } = useNotification();
+  const { getSuccess, getError } = useNotification();
   const dispatch: AppDispatch = useDispatch();
-  const navigate = useNavigate();
 
-  const { isAuth } = useAppSelector((state) => state.authReducer);
+  const { isAuth, error, success } = useAppSelector(
+    (state) => state.authReducer
+  );
+
+  const handleError = React.useCallback(
+    (error: string | null) => {
+      if (error) {
+        getError(error);
+      }
+    },
+    [error]
+  );
+
+  const handleSuccess = React.useCallback(() => {
+    if (success) {
+      getSuccess("Welcome to Morty's Store");
+    }
+  }, [success]);
+
+  React.useEffect(() => {
+    handleError(error);
+  }, [error, handleError]);
+
+  React.useEffect(() => {
+    handleSuccess();
+  }, [success, handleSuccess]);
 
   const formik = useFormik<LoginType>({
     initialValues: {
       username: "",
       password: "",
     },
+
     validationSchema: LoginValidate,
-    onSubmit: (values) => {
-      dispatch(authThunk(values));
-      navigate("/");
+    onSubmit: async (
+      values: LoginType,
+      { setSubmitting }: FormikHelpers<LoginType>
+    ) => {
+      setSubmitting(true);
+      await dispatch(authThunk(values));
+      setSubmitting(false);
     },
   });
 
@@ -92,12 +120,13 @@ const LoginPage = () => {
                 type="submit"
                 variant="contained"
                 sx={{ mt: 2, mb: 3 }}
+                disabled={formik.isSubmitting}
               >
                 Login
               </Button>
             </Box>
             <Typography sx={{ mt: 1, mb: 1 }} variant="body2">
-              Make up a username and password.
+              ask for the credentials
             </Typography>
           </Paper>
         </Grid2>

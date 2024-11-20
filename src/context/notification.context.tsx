@@ -3,7 +3,7 @@ import { Notification } from "../components";
 import { AlertColor } from "@mui/material";
 
 type contextProps = {
-  getError: (msg: string) => void;
+  getError: (msg: string | null) => void;
   getSuccess: (msg: string) => void;
 };
 
@@ -24,9 +24,15 @@ export const NotificationProvider = ({
     setOpen(false);
   };
 
-  const getError = (msg: string) => {
+  const getError = (msg: string | null) => {
+    if (!msg) {
+      return;
+    }
+    if (msg === "auth/invalid-credential") {
+      setMsg("invalid credential , try again.");
+    }
+
     setOpen(true);
-    setMsg(msg);
     setSeverity("error");
   };
 
