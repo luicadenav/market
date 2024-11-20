@@ -126,7 +126,7 @@ const LoginPage = () => {
               </Button>
             </Box>
             <Typography sx={{ mt: 1, mb: 1 }} variant="body2">
-              Make up a username and password.
+              ask for the credentials
             </Typography>
           </Paper>
         </Grid2>
