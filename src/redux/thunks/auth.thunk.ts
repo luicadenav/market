@@ -25,8 +25,11 @@ export const authThunk = createAsyncThunk(
           uid,
         },
       };
-    } catch (error) {
-      return rejectWithValue(error);
+    } catch (error: any) {
+      return rejectWithValue({
+        code: error.code,
+        message: error.message,
+      });
     }
   }
 );
