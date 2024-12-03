@@ -52,10 +52,6 @@ const NavBar = () => {
               </Grid2>
               <Grid2>
                 {isAuth ? (
-                  <Button variant="contained" onClick={handleLogout}>
-                    logout
-                  </Button>
-                ) : (
                   <Stack spacing={2} direction="row">
                     <IconButton
                       color="primary"
@@ -65,6 +61,12 @@ const NavBar = () => {
                         <ShoppingCartOutlinedIcon />
                       </Badge>
                     </IconButton>
+                    <Button variant="contained" onClick={handleLogout}>
+                      logout
+                    </Button>
+                  </Stack>
+                ) : (
+                  <Stack spacing={2} direction="row">
                     <Button
                       variant="contained"
                       onClick={() => navigate("login")}
