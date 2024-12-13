@@ -11,16 +11,17 @@ import {
 import { useDispatch } from "react-redux";
 import { Link as RouterLink, Navigate } from "react-router-dom";
 import { useNotification } from "../../context/notification.context";
-import { LoginValidate } from "../../utils/validateForm";
+import { RegisterValidate } from "../../utils/validateForm";
 import { FormikHelpers, useFormik } from "formik";
 import { useAppSelector } from "../../redux/hooks";
 import { AppDispatch } from "../../redux/store";
 import React from "react";
 import { registerThunk } from "../../redux/thunks/register.thunk";
 
-type LoginType = {
+type RegisterType = {
   username: string;
   password: string;
+  confirmPassword: string;
 };
 
 const RegisterPage = () => {
@@ -56,16 +57,17 @@ const RegisterPage = () => {
     handleSuccess();
   }, [success, handleSuccess]);
 
-  const formik = useFormik<LoginType>({
+  const formik = useFormik<RegisterType>({
     initialValues: {
       username: "",
       password: "",
+      confirmPassword: "",
     },
 
-    validationSchema: LoginValidate,
+    validationSchema: RegisterValidate,
     onSubmit: async (
-      values: LoginType,
-      { setSubmitting }: FormikHelpers<LoginType>
+      values: RegisterType,
+      { setSubmitting }: FormikHelpers<RegisterType>
     ) => {
       setSubmitting(true);
       await dispatch(registerThunk(values));
@@ -117,6 +119,24 @@ const RegisterPage = () => {
                   formik.touched.password && Boolean(formik.errors.password)
                 }
                 helperText={formik.touched.password && formik.errors.password}
+              />
+
+              <TextField
+                name="confirmPassword"
+                fullWidth
+                type="password"
+                label="Confirm Password"
+                onChange={formik.handleChange}
+                sx={{ mt: 1.5, mb: 1.5 }}
+                value={formik.values.confirmPassword}
+                error={
+                  formik.touched.confirmPassword &&
+                  Boolean(formik.errors.confirmPassword)
+                }
+                helperText={
+                  formik.touched.confirmPassword &&
+                  formik.errors.confirmPassword
+                }
               />
               <Button
                 fullWidth
