@@ -6,9 +6,10 @@ import {
   TextField,
   Typography,
   Grid2,
+  Link,
 } from "@mui/material";
 import { useDispatch } from "react-redux";
-import { Navigate } from "react-router-dom";
+import { Link as RouterLink, Navigate } from "react-router-dom";
 import { useNotification } from "../../context/notification.context";
 import { LoginValidate } from "../../utils/validateForm";
 import { FormikHelpers, useFormik } from "formik";
@@ -86,7 +87,7 @@ const LoginPage = () => {
         <Grid2>
           <Paper sx={{ padding: "1.2em", borderRadius: "0.5em" }}>
             <Typography sx={{ mt: 1, mb: 1 }} variant="h4">
-              Iniciar sesión
+              Login
             </Typography>
             <Box component="form" onSubmit={formik.handleSubmit}>
               <TextField
@@ -122,11 +123,19 @@ const LoginPage = () => {
                 sx={{ mt: 2, mb: 3 }}
                 disabled={formik.isSubmitting}
               >
-                Login
+                Sign in
               </Button>
             </Box>
             <Typography sx={{ mt: 1, mb: 1 }} variant="body2">
-              ask for the credentials
+              Don't have an account?{" "}
+              <Link
+                component={RouterLink}
+                to="/register"
+                underline="none"
+                color="primary"
+              >
+                Register
+              </Link>
             </Typography>
           </Paper>
         </Grid2>

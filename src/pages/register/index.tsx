@@ -6,14 +6,14 @@ import {
   TextField,
   Typography,
   Grid2,
+  Link,
 } from "@mui/material";
 import { useDispatch } from "react-redux";
-import { Navigate } from "react-router-dom";
+import { Link as RouterLink, Navigate } from "react-router-dom";
 import { useNotification } from "../../context/notification.context";
 import { LoginValidate } from "../../utils/validateForm";
 import { FormikHelpers, useFormik } from "formik";
 import { useAppSelector } from "../../redux/hooks";
-import { authThunk } from "../../redux/thunks/auth.thunk";
 import { AppDispatch } from "../../redux/store";
 import React from "react";
 import { registerThunk } from "../../redux/thunks/register.thunk";
@@ -23,7 +23,7 @@ type LoginType = {
   password: string;
 };
 
-const LoginPage = () => {
+const RegisterPage = () => {
   const { getSuccess, getError } = useNotification();
   const dispatch: AppDispatch = useDispatch();
 
@@ -33,6 +33,8 @@ const LoginPage = () => {
 
   const handleError = React.useCallback(
     (error: string | null) => {
+      console.log("error in  register", error);
+
       if (error) {
         getError(error);
       }
@@ -87,7 +89,7 @@ const LoginPage = () => {
         <Grid2>
           <Paper sx={{ padding: "1.2em", borderRadius: "0.5em" }}>
             <Typography sx={{ mt: 1, mb: 1 }} variant="h4">
-              Sign Up
+              Register
             </Typography>
             <Box component="form" onSubmit={formik.handleSubmit}>
               <TextField
@@ -123,11 +125,19 @@ const LoginPage = () => {
                 sx={{ mt: 2, mb: 3 }}
                 disabled={formik.isSubmitting}
               >
-                Register
+                Sign up
               </Button>
             </Box>
             <Typography sx={{ mt: 1, mb: 1 }} variant="body2">
-              do you already have an account Login
+              Have an account?{" "}
+              <Link
+                component={RouterLink}
+                to="/login"
+                underline="none"
+                color="primary"
+              >
+                Login
+              </Link>
             </Typography>
           </Paper>
         </Grid2>
@@ -136,4 +146,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+export default RegisterPage;
