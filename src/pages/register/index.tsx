@@ -14,16 +14,16 @@ import { useNotification } from "../../context/notification.context";
 import { LoginValidate } from "../../utils/validateForm";
 import { FormikHelpers, useFormik } from "formik";
 import { useAppSelector } from "../../redux/hooks";
-import { authThunk } from "../../redux/thunks/auth.thunk";
 import { AppDispatch } from "../../redux/store";
 import React from "react";
+import { registerThunk } from "../../redux/thunks/register.thunk";
 
 type LoginType = {
   username: string;
   password: string;
 };
 
-const LoginPage = () => {
+const RegisterPage = () => {
   const { getSuccess, getError } = useNotification();
   const dispatch: AppDispatch = useDispatch();
 
@@ -33,6 +33,8 @@ const LoginPage = () => {
 
   const handleError = React.useCallback(
     (error: string | null) => {
+      console.log("error in  register", error);
+
       if (error) {
         getError(error);
       }
@@ -42,7 +44,7 @@ const LoginPage = () => {
 
   const handleSuccess = React.useCallback(() => {
     if (success) {
-      getSuccess("Welcome to Morty's Store");
+      getSuccess("Successful registration");
     }
   }, [success]);
 
@@ -66,7 +68,7 @@ const LoginPage = () => {
       { setSubmitting }: FormikHelpers<LoginType>
     ) => {
       setSubmitting(true);
-      await dispatch(authThunk(values));
+      await dispatch(registerThunk(values));
       setSubmitting(false);
     },
   });
@@ -87,7 +89,7 @@ const LoginPage = () => {
         <Grid2>
           <Paper sx={{ padding: "1.2em", borderRadius: "0.5em" }}>
             <Typography sx={{ mt: 1, mb: 1 }} variant="h4">
-              Login
+              Register
             </Typography>
             <Box component="form" onSubmit={formik.handleSubmit}>
               <TextField
@@ -123,18 +125,18 @@ const LoginPage = () => {
                 sx={{ mt: 2, mb: 3 }}
                 disabled={formik.isSubmitting}
               >
-                Sign in
+                Sign up
               </Button>
             </Box>
             <Typography sx={{ mt: 1, mb: 1 }} variant="body2">
-              Don't have an account?{" "}
+              Have an account?{" "}
               <Link
                 component={RouterLink}
-                to="/register"
+                to="/login"
                 underline="none"
                 color="primary"
               >
-                Register
+                Login
               </Link>
             </Typography>
           </Paper>
@@ -144,4 +146,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+export default RegisterPage;

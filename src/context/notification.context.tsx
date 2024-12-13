@@ -2,6 +2,19 @@ import React from "react";
 import { Notification } from "../components";
 import { AlertColor } from "@mui/material";
 
+enum RegisterErrorMessages {
+  InvalidCredential = "invalid credential, try again.",
+  EmailInUse = "Email already in use",
+  WeakPassword = "Weak password",
+  Default = "Something went wrong",
+}
+
+const errorMessagesMap: Record<string, RegisterErrorMessages> = {
+  "auth/invalid-credential": RegisterErrorMessages.InvalidCredential,
+  "auth/email-already-in-use": RegisterErrorMessages.EmailInUse,
+  "auth/weak-password": RegisterErrorMessages.WeakPassword,
+};
+
 type contextProps = {
   getError: (msg: string | null) => void;
   getSuccess: (msg: string) => void;
@@ -28,10 +41,7 @@ export const NotificationProvider = ({
     if (!msg) {
       return;
     }
-    if (msg === "auth/invalid-credential") {
-      setMsg("invalid credential , try again.");
-    }
-
+    setMsg(errorMessagesMap[msg] || RegisterErrorMessages.Default);
     setOpen(true);
     setSeverity("error");
   };
