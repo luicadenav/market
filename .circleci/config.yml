@@ -4,7 +4,7 @@ jobs:
   install-dependencies:
     working_directory: ~/repo
     docker:
-      - image: cimg/node:18.17.0
+      - image: cimg/node:20.17.0
     steps:
       - checkout
       - run:
