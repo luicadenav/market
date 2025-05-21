@@ -52,9 +52,17 @@ export const CardComponent = ({
   };
   return (
     <Card>
-      <CardMedia component="img" height="194" image={image} alt="" />
+      <CardMedia component="img" height="194" image={image} alt="card mortys" />
       <CardContent>
-        <Typography variant="h4" sx={{ mb: 1.5 }}>
+        <Typography
+          variant="h4"
+          sx={{
+            mb: 1.5,
+            whiteSpace: "nowrap",
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+          }}
+        >
           {name}
         </Typography>
         <Divider />

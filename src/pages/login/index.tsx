@@ -17,6 +17,7 @@ import { useAppSelector } from "../../redux/hooks";
 import { authThunk } from "../../redux/thunks/auth.thunk";
 import { AppDispatch } from "../../redux/store";
 import React from "react";
+import background from "../../assets/images/background.webp";
 
 type LoginType = {
   username: string;
@@ -76,15 +77,28 @@ const LoginPage = () => {
   }
 
   return (
-    <Container maxWidth="sm">
+    <Container
+      maxWidth={false}
+      sx={{
+        backgroundImage: `url(${background})`,
+        backgroundSize: "cover",
+        backgroundRepeat: "no-repeat",
+        backgroundPosition: "center",
+        height: "100vh",
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
       <Grid2
         container
-        direction="column"
-        alignItems="center"
+        direction="row"
+        alignItems="top"
         justifyContent="center"
-        sx={{ minHeight: "90vh" }}
+        spacing={2}
       >
-        <Grid2>
+        <Grid2 size={{ xs: 12, sm: 8, md: 6, lg: 4, xl: 3 }}>
           <Paper sx={{ padding: "1.2em", borderRadius: "0.5em" }}>
             <Typography sx={{ mt: 1, mb: 1 }} variant="h4">
               Login
@@ -136,6 +150,27 @@ const LoginPage = () => {
               >
                 Register
               </Link>
+            </Typography>
+          </Paper>
+        </Grid2>
+        <Grid2 size={{ xs: 12, sm: 8, md: 6, lg: 4, xl: 3 }}>
+          <Paper
+            sx={{ padding: "1.2em", borderRadius: "0.5em", height: "100%" }}
+          >
+            <Typography sx={{ mt: 1, mb: 1 }} variant="h4">
+              What is Morty's Store?
+            </Typography>
+            <Typography sx={{ mt: 1, mb: 1 }} variant="body2">
+              A self-initiated project designed to deepen my knowledge of
+              Material UI, TypeScript, and modern frontend patterns — all while
+              having fun with the Rick & Morty API.
+            </Typography>
+            <Typography sx={{ mt: 1, mb: 1 }} variant="body2">
+              This interactive web app lets you browse through a gallery of
+              character cards, each filled with fun details. Love a character?
+              Add them to your personal cart. Changed your mind? Remove them
+              with a click. Build your ultimate Rick and Morty squad — one card
+              at a time.
             </Typography>
           </Paper>
         </Grid2>

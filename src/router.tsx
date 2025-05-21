@@ -1,6 +1,12 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
-import { HomePage, LoginPage, CharacterPage, RegisterPage } from "./pages/";
+import {
+  HomePage,
+  LoginPage,
+  CharacterPage,
+  RegisterPage,
+  ProfilePage,
+} from "./pages/";
 import RouterLayout from "./common/RouterLayout";
 
 const AppRouter = () => {
@@ -8,6 +14,7 @@ const AppRouter = () => {
     <Routes>
       <Route path="/" element={<RouterLayout />}>
         <Route path="/" element={<HomePage />} />
+        <Route path="/profile" element={<ProfilePage />} />
         <Route path="/character/:id" element={<CharacterPage />} />
       </Route>
       <Route path="/login" element={<LoginPage />} />

@@ -11,20 +11,25 @@ import {
   Badge,
 } from "@mui/material";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useAppSelector } from "../redux/hooks";
 import { CartComponent } from "./Cart";
 import React from "react";
 import { useDispatch } from "react-redux";
 import { logout } from "../redux/slices/auth.slice";
 import Cookies from "js-cookie";
+import luLogo from "../assets/images/logo.svg";
 
 const NavBar = () => {
   const { isAuth } = useAppSelector((state) => state.authReducer);
   const navigate = useNavigate();
+  const location = useLocation();
+
   const dispatch = useDispatch();
   const items = useAppSelector((state) => state.cartReducer);
   const [open, setOpen] = React.useState<boolean>(false);
+
+  const isHome = location.pathname === "/";
 
   const handleStateViewDrawer = () => {
     setOpen((state) => !state);
@@ -34,6 +39,10 @@ const NavBar = () => {
     dispatch(logout());
     Cookies.remove("accessToken");
     navigate("/login");
+  };
+
+  const handleClick = () => {
+    navigate(isHome ? "/profile" : "/");
   };
 
   return (
@@ -48,7 +57,19 @@ const NavBar = () => {
               alignItems="center"
             >
               <Grid2>
-                <Typography>Cadena Crea</Typography>
+                <Box
+                  component="img"
+                  src={luLogo}
+                  alt="luisa logo"
+                  sx={{
+                    width: {
+                      xs: "40px",
+                      sm: "50px",
+                    },
+                    display: "block",
+                    margin: "0 auto",
+                  }}
+                />
               </Grid2>
               <Grid2>
                 {isAuth ? (
@@ -61,6 +82,15 @@ const NavBar = () => {
                         <ShoppingCartOutlinedIcon />
                       </Badge>
                     </IconButton>
+                    <Button
+                      sx={{
+                        minWidth: "100px", // o cualquier valor que necesites
+                      }}
+                      variant="contained"
+                      onClick={handleClick}
+                    >
+                      {isHome ? "profile" : "Home"}
+                    </Button>
                     <Button variant="contained" onClick={handleLogout}>
                       logout
                     </Button>

@@ -23,7 +23,7 @@ export const HeaderComponent = ({
           sx={{ height: "100%" }}
         >
           <Grid2
-            size={{ xs: 5, md: 8 }}
+            size={{ xs: 12, md: 8 }}
             container
             direction="column"
             justifyContent="center"
@@ -31,7 +31,18 @@ export const HeaderComponent = ({
             sx={{ height: "100%" }}
           >
             <Grid2>
-              <Typography variant="h1" sx={{ my: 2 }}>
+              <Typography
+                variant="h1"
+                sx={{
+                  my: 2,
+                  fontSize: {
+                    xs: "3rem",
+                    sm: "5rem",
+                    lg: "6rem",
+                  },
+                }}
+                textAlign="center"
+              >
                 {title}
               </Typography>
             </Grid2>
@@ -39,7 +50,7 @@ export const HeaderComponent = ({
               <Typography>{description}</Typography>
             </Grid2>
             {element !== undefined && (
-              <Grid2 width="100%" sx={{ mt: 4 }}>
+              <Grid2 size={{ xs: 6, md: 4 }} sx={{ mt: 4 }}>
                 {element}
               </Grid2>
             )}

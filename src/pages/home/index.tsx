@@ -63,7 +63,7 @@ export const HomePage = () => {
               <Grid2 sx={{ my: 2 }} container spacing={2} direction="row">
                 {allCharacters?.map((character) => {
                   return (
-                    <Grid2 key={character.id} size={{ xs: 3 }}>
+                    <Grid2 key={character.id} size={{ xs: 12, sm: 6, md: 3 }}>
                       <CardComponent
                         name={character.name}
                         image={character.image}

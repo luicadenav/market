@@ -17,6 +17,7 @@ import { useAppSelector } from "../../redux/hooks";
 import { AppDispatch } from "../../redux/store";
 import React from "react";
 import { registerThunk } from "../../redux/thunks/register.thunk";
+import background from "../../assets/images/background.webp";
 
 type RegisterType = {
   username: string;
@@ -80,7 +81,16 @@ const RegisterPage = () => {
   }
 
   return (
-    <Container maxWidth="sm">
+    <Container
+      maxWidth={false}
+      sx={{
+        backgroundImage: `url(${background})`,
+        backgroundSize: "cover",
+        backgroundRepeat: "no-repeat",
+        backgroundPosition: "center",
+        height: "100vh",
+      }}
+    >
       <Grid2
         container
         direction="column"
@@ -88,7 +98,7 @@ const RegisterPage = () => {
         justifyContent="center"
         sx={{ minHeight: "90vh" }}
       >
-        <Grid2>
+        <Grid2 size={{ xs: 12 }} sx={{ maxWidth: "600px" }}>
           <Paper sx={{ padding: "1.2em", borderRadius: "0.5em" }}>
             <Typography sx={{ mt: 1, mb: 1 }} variant="h4">
               Register
